@@ -17,16 +17,9 @@ public class JpaMain {
         tx.begin();
 
         try {
-            //비영속
-            Member member = new Member();
-            member.setId(100L);
-            member.setName("HIHI");
-
-            //영속
-            System.out.println("====BEFORE====");
-            em.persist(member);
-            System.out.println("====AFTER====");
-            //---> persist순간 db에 저장되지 않음
+            Member member = em.find(Member.class, 150L);
+            member.setName("ZZZ");
+            //---> 150이란 ID를 가진 멤버를 찾아서 이름을 ZZZ로 바꿈 하지만 em.persist를 해주지 않아도 저장됨
             tx.commit();
             //--->commit 순간 db에 저장
         } catch (Exception e) {
