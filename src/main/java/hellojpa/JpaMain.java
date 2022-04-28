@@ -17,24 +17,24 @@ public class JpaMain {
         tx.begin();
 
         try {
-//            Member findMember = em.find(Member.class, 1L);
-            List<Member> result = em.createQuery("select m from Member as m", Member.class)
-                    .setFirstResult(5)
-                    .setMaxResults(8)
-                    .getResultList();
+            //비영속
+            Member member = new Member();
+            member.setId(100L);
+            member.setName("HIHI");
 
-            for (Member member : result) {
-                System.out.println("member = " + member.getName());
-            }
-
+            //영속
+            System.out.println("====BEFORE====");
+            em.persist(member);
+            System.out.println("====AFTER====");
+            //---> persist순간 db에 저장되지 않음
             tx.commit();
+            //--->commit 순간 db에 저장
         } catch (Exception e) {
             tx.rollback();
         } finally {
             em.close();
         }
         emf.close();
-
 
         //code
         em.close();
