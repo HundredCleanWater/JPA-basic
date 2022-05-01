@@ -17,9 +17,12 @@ public class JpaMain {
         tx.begin();
 
         try {
-            Member member = em.find(Member.class, 150L);
+            Member member = em.find(Member.class, 1L);
             member.setName("ZZZ");
-            //---> 150이란 ID를 가진 멤버를 찾아서 이름을 ZZZ로 바꿈 하지만 em.persist를 해주지 않아도 저장됨
+
+            em.clear();
+            em.find(Member.class, 2L);
+            System.out.println("===========");
             tx.commit();
             //--->commit 순간 db에 저장
         } catch (Exception e) {
@@ -29,10 +32,6 @@ public class JpaMain {
         }
         emf.close();
 
-        //code
-        em.close();
-
-        emf.close();
 
     }
 }
